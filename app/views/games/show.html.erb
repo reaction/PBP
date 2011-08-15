@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+<div class="game_block">
+<p>
+  <b>Name:</b>
+  <%= @game.name %>
+</p>
+<p>
+  <b>Open:</b>
+  <%= @game.open %>
+</p>
+<p>
+  <b>Variables:</b>
+  <%= @game.variables %>
+</p>
+<p>
+  <b>Gm:</b>
+  <%= @game.gm %>
+</p>
+</div>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Subject</th>
+    <th>Message</th>
+    <th>Posted</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<% @posts = Post.find_all_by_game_id(@game.id, :order => "created_at")%>
+<% @posts.each do |post| %>
+  <tr class=<%=cycle('even', 'odd')%>>
+    <td><%=
+    if post.user_id? 
+    User.find(post.user_id).username
+    #post.user_id 
+    end
+    %></td>
+    <td><%= post.subject %></td>
+    <td><%= post.message %></td>
+    <td><%= post.created_at.strftime("%d/%m/%y %r") %></td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Post', new_post_path(:game_id => @game) %><br />
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>

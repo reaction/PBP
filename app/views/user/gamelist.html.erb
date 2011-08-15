@@ -1,0 +1,4 @@
+<h1>Gamelist</h1>
+<% @games.each do |game| %>
+<%= game.name %> <%= game.system %> <%= game.creator %> <% @user = User.find(game.creator) %><%= @user.username %>
+<% end %>
