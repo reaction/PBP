@@ -1,4 +1,21 @@
 Pbp::Application.routes.draw do
+  
+  resources :posts
+
+  get "user/gamelist"
+
+  resources :games
+
+  get "user/thread"
+
+  get "user/admin"
+
+  get "user/index"
+
+
+  devise_for :users
+
+  root :to => 'user#index' #, :as => 'user'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
