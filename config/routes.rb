@@ -1,5 +1,7 @@
 Pbp::Application.routes.draw do
   
+  get "posts/add_dice"
+  
   resources :posts
 
   get "user/gamelist"
@@ -12,6 +14,7 @@ Pbp::Application.routes.draw do
 
   get "user/index"
 
+  
 
   devise_for :users
 
@@ -24,6 +27,7 @@ Pbp::Application.routes.draw do
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
+  match 'posts/add_dice' => 'posts#add_dice', :as => :add_dice
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
   # This route can be invoked with purchase_url(:id => product.id)
 

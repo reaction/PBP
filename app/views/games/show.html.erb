@@ -37,7 +37,7 @@
     end
     %></td>
     <td><%= post.subject %></td>
-    <td><%= post.message %></td>
+    <td <%= "class=dice" if post.action == "Dice" %>><%= post.message %></td>
     <td><%= post.created_at.strftime("%d/%m/%y %r") %></td>
     <td><%= link_to 'Show', post %></td>
     <td><%= link_to 'Edit', edit_post_path(post) %></td>
@@ -49,6 +49,13 @@
 <br />
 
 <%= link_to 'New Post', new_post_path(:game_id => @game) %><br />
-
+<%= #link_to 'Roll Dice', add_dice_post_path(:game_id => @game, :die_roll => "3d6") 
+%><br />
+<%= #link_to "Roll Dice", { :controller => "posts", :action => "add_dice" }, :game_id => @game,  :message => "1d20"
+%><br />
+<%= form_tag(:controller => "posts", :action => "add_dice", :game_id => @game, :message => "1d20") %>
+<%= text_field_tag 'die_roll' %><%= submit_tag 'Submit' %><br />
+<%= link_to "Roll Dice", :controller=>"posts", :action=>"add_dice", :game_id => @game, :message => "1d20"
+%><br />
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>

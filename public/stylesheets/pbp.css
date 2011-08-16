@@ -14,3 +14,17 @@
 .odd {
 	background: #CCCCCC;
 }
+
+.odddice {
+	background: #CCCCCC;
+	color: #FF0000;
+}
+
+.evendice {
+	background: #F0F0F0;
+	color: #FF0000;
+}
+.dice {
+	background: #ffffff;
+	color: #FF0000;
+}

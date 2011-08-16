@@ -4,6 +4,7 @@ module Dicebox # dice functions by JD. http://d20.jonnydigital.com/
     def initialize(line)
       @line = line.to_s
       @dice_regex = /((\+|-)?(\d+)(d\d+)?)/
+      #@dice_regex = /((\+|-)?(\d+)(d(\d+|f))?)/
     end
     
     def roll()

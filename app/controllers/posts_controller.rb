@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  require 'dicebox'
   # GET /posts
   # GET /posts.xml
   def index
@@ -9,7 +10,33 @@ class PostsController < ApplicationController
       format.xml  { render :xml => @posts }
     end
   end
-
+  def add_dice
+    #@game = current_game 
+    @game = Game.find(params[:game_id])
+    @post = @game.posts.build(params[:post])
+    @post.user_id = current_user.id
+    @post.action = "Dice"
+    @post.subject = "Die Roll"
+    logger.debug "Logging!"
+    logger.debug params[:die_roll]
+    logger.debug params[:message]
+    #dice = Dicebox::Dice.new(params[:die_roll])
+    dice = Dicebox::Dice.new(params[:die_roll])
+    @post.message =  dice.roll
+    #@game.posts.build(:user_id => current_user.id)
+    respond_to do |format|
+    if @post.save
+    format.html { redirect_to(@post.game,
+    :notice => '') }
+    format.xml { render :xml => @post,
+    :status => :created, :location => @post }
+    else
+    format.html { render :action => "new" }
+    format.xml { render :xml => @post.errors,
+    :status => :unprocessable_entity }
+    end
+  end
+  end
   # GET /posts/1
   # GET /posts/1.xml
   def show
@@ -50,7 +77,7 @@ class PostsController < ApplicationController
     respond_to do |format|
     if @post.save
     format.html { redirect_to(@post.game,
-    :notice => 'Line item was successfully created.') }
+    :notice => '') }
     format.xml { render :xml => @post,
     :status => :created, :location => @post }
     else

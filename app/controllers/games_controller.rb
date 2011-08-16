@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  require 'dicebox'
   # GET /games
   # GET /games.xml
   def index
