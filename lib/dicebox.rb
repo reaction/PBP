@@ -4,11 +4,20 @@ module Dicebox # dice functions by JD. http://d20.jonnydigital.com/
     def initialize(line)
       @line = line.to_s
       @dice_regex = /((\+|-)?(\d+)(d\d+)?)/
-      #@dice_regex = /((\+|-)?(\d+)(d(\d+|f))?)/
+      @fudge_dice_regex = /((\+|-)?(\d+)(df)?)/
     end
     
     def roll()
-      return roll_line(@line)
+      # roll fudge dice
+      if @line =~ @fudge_dice_regex
+        result = ["Fudge Dice: "]
+        .to_i.3times do
+          result << fudgedice()
+        end
+        return result + " fudge"
+      else
+        return roll_line(@line)
+      end
     end
 
     def roll_line(line)
@@ -78,7 +87,14 @@ module Dicebox # dice functions by JD. http://d20.jonnydigital.com/
       # sample ["+1", "+", "1", nil]
       original, sign, numerator, denominator = element[0], element[1], element[2], element[3]
       sign = "+" unless sign
-      
+      # roll fudge dice
+      if (denominator == "df")
+        result = ["Fudge Dice: "]
+        numerator.to_i.times do
+          result << fudgedice()
+        end
+        return result + " fudge"
+      else
       # fix for "d20"
       if (not denominator) and original =~ /^(\+|-)?d(\d+)/
         sign = $1
@@ -91,6 +107,7 @@ module Dicebox # dice functions by JD. http://d20.jonnydigital.com/
         numerator.to_i.times do
           result << random(denominator.delete("d").to_i)
         end
+        
       else
         result = [numerator.to_i]
       end
@@ -99,13 +116,17 @@ module Dicebox # dice functions by JD. http://d20.jonnydigital.com/
       if sign == "-"
         result = result.map{ |r| 0 - r}
       end
-      
+    end  
       return result
     end
 
     def random(value)
       return 0 if value == 0
       return rand(value)+1
+    end
+    
+    def fudgedice()
+      return rand(3)-1
     end
 
   end

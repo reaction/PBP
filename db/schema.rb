@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815053313) do
+ActiveRecord::Schema.define(:version => 20110817001506) do
 
   create_table "games", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20110815053313) do
     t.string   "system"
     t.integer  "creator"
     t.text     "description"
+    t.boolean  "hidden",      :default => false
   end
 
   create_table "posts", :force => true do |t|
