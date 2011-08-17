@@ -1,5 +1,7 @@
 Pbp::Application.routes.draw do
   
+  resources :characters
+
   get "posts/add_dice"
   
   resources :posts
