@@ -1,0 +1,4 @@
+== 0.2.0
+* Created User, Character, Game, and Post models
+* Started game list layout
+* Integrated die roll posts
